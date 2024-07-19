@@ -18,8 +18,6 @@ const Listarticle = () => {
   const [limit, setLimit] = useState(5);
   const [searchText, setSearchText] = useState("");
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   const fetchProducts = async (page, limit, searchText) => {
     try {
@@ -76,6 +74,15 @@ const Listarticle = () => {
       ],
     });
   };
+  const handleShow = () => {
+    setShow(true);
+  };
+  const handleClose = () => {
+    setShow(false);
+  };
+  const modifarticle = (artmod) => {
+    setArticles(articles.map((art) => (art._id === artmod._id ? artmod : art)));
+  };
 
   return (
     <div>
@@ -99,6 +106,7 @@ const Listarticle = () => {
         handleLimitChange={handleLimitChange}
         limit={limit}
         handleDeletearticle={handleDeletearticle}
+        modifarticle={modifarticle}
       />
       <Pagination
         handlePrevPage={handlePrevPage}
@@ -108,14 +116,6 @@ const Listarticle = () => {
         totalPages={totalPages}
         currentPage={currentPage}
       />
-      {show && (
-        <Insertarticle
-          show={show}
-          handleClose={handleClose}
-          fetchProducts={fetchProducts}
-          limit={limit}
-        />
-      )}
     </div>
   );
 };
